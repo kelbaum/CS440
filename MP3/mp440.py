@@ -9,7 +9,7 @@ return value for the function should be the number of pieces hat will be moved.
 If the move is not valid, then the value 0 (zero) should be returned. Note
 here that row and column both start with index 0. 
 '''
-#10
+#Kyle
 def get_move_value(state, player, row, column):
     flipped = 0
     # Your implementation goes here 
@@ -21,7 +21,7 @@ Execute a move that updates the state. A new state should be crated. The move
 must be valid. Note that the new state should be a clone of the old state and
 in particular, should not share memory with the old state. 
 '''
-#5
+#Nick
 def execute_move(state, player, row, column):
     new_state = None
     # Your implementation goes here 
@@ -34,7 +34,7 @@ return value should be two tuple in the format of (blackpeices, white pieces), e
     return (4, 3)
 
 '''
-#5
+#Nick
 def count_pieces(state):
     blackpieces = 0
     whitepieces = 0
@@ -44,7 +44,7 @@ def count_pieces(state):
 '''
 Check whether a state is a terminal state. 
 '''
-#5
+#Kyle
 def is_terminal_state(state, state_list = None):
     terminal = False
     # Your implementation goes here 
