@@ -1,8 +1,6 @@
-<<<<<<< HEAD
+# Not needed
 HW1/
 
-=======
->>>>>>> c8d129ecd7fc9d15a481e3e1922e6e6015386808
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -106,8 +104,7 @@ venv.bak/
 /site
 
 # mypy
-<<<<<<< HEAD
 .mypy_cache/
-=======
-.mypy_cache/
->>>>>>> c8d129ecd7fc9d15a481e3e1922e6e6015386808
+
+# osx
+.DS_Store
