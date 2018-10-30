@@ -21,11 +21,13 @@ Execute a move that updates the state. A new state should be crated. The move
 must be valid. Note that the new state should be a clone of the old state and
 in particular, should not share memory with the old state. 
 '''
-#Nick
+#Nick, WIP
 def execute_move(state, player, row, column):
     #Make new state with applicable number of rows
     #Iterate by row across state and transition
+
     new_state = []
+    
     for x in range(0, len(state),1):
         new_state.append([])
         for y in range(0, len(state), 1):
@@ -35,7 +37,7 @@ def execute_move(state, player, row, column):
                 new_state[x].append(state[x][y])
     
     #Propagate changes cause by move
-    for x in range(row, )
+    
     return new_state
 
 '''
