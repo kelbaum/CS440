@@ -23,8 +23,19 @@ in particular, should not share memory with the old state.
 '''
 #Nick
 def execute_move(state, player, row, column):
-    new_state = None
-    # Your implementation goes here 
+    #Make new state with applicable number of rows
+    #Iterate by row across state and transition
+    new_state = []
+    for x in range(0, len(state),1):
+        new_state.append([])
+        for y in range(0, len(state), 1):
+            if x == row and y == column:
+                new_state[x].append(player)
+            else:
+                new_state[x].append(state[x][y])
+    
+    #Propagate changes cause by move
+    for x in range(row, )
     return new_state
 
 '''
@@ -34,11 +45,16 @@ return value should be two tuple in the format of (blackpeices, white pieces), e
     return (4, 3)
 
 '''
-#Nick
 def count_pieces(state):
     blackpieces = 0
     whitepieces = 0
-    # Your implementation goes here 
+    
+    for row in state:
+        for item in row:
+            if item == 'B':
+                blackpieces = blackpieces + 1
+            elif item == 'W':
+                whitepieces = whitepieces + 1
     return (blackpieces, whitepieces)
 
 '''
