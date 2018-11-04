@@ -126,11 +126,7 @@ def get_move_value(state, player, row, column):
     else:
         i = row + 1
         j = column - 1
-<<<<<<< HEAD
-        while j != -1 and i != len(state):
-=======
         while i != len(state) and j != -1:
->>>>>>> Nick-minimax-ab
             if state[i][j] == other_player:
                 flip_temp += 1
                 i += 1
@@ -143,11 +139,7 @@ def get_move_value(state, player, row, column):
         flip_temp = 0
         i = row - 1
         j = column + 1
-<<<<<<< HEAD
         while i != -1 and j != len(state[row]):
-=======
-        while i != -1  and j != len(state[row]) :
->>>>>>> Nick-minimax-ab
             if state[i][j] == other_player:
                 flip_temp += 1
                 i -= 1
@@ -493,10 +485,6 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
     moves = []
     for x in range(0,len(state),1):
             for y in range(0, len(state),1):
-<<<<<<< HEAD
-                # print "x: {} y: {}".format(x,y)
-=======
->>>>>>> Nick-minimax-ab
                 if (get_move_value(state,player,x,y) != 0):
                     moves.append((x,y))
 
