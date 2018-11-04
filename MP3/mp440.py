@@ -464,6 +464,7 @@ def full_minimax(state, player):
             play = 'W'
         else:
             play = 'B'
+    move_sequence.append((play,-1,-1))
     return (value, move_sequence)
 
 
