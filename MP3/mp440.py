@@ -126,7 +126,7 @@ def get_move_value(state, player, row, column):
     else:
         i = row + 1
         j = column - 1
-        while column != -1 and row != len(state):
+        while j != -1 and i != len(state):
             if state[i][j] == other_player:
                 flip_temp += 1
                 i += 1
@@ -139,7 +139,7 @@ def get_move_value(state, player, row, column):
         flip_temp = 0
         i = row - 1
         j = column + 1
-        while row != -1 and column != len(state[row]):
+        while i != -1 and j != len(state[row]):
             if state[i][j] == other_player:
                 flip_temp += 1
                 i -= 1
@@ -194,7 +194,7 @@ def get_move_value(state, player, row, column):
         flip_temp = 0
         i = row + 1
         j = column + 1
-        while row != len(state) and column != len(state[row]):
+        while i != len(state) and j != len(state[row]):
             if state[i][j] == other_player:
                 flip_temp += 1
                 i += 1
@@ -389,12 +389,24 @@ def minimax(state, player):
     row = -1
     column = -1
     # Your implementation goes here
-    if is_terminal_state(state):
-        (b, w) = count_pieces(state)
-        return (b - w, row, column)
+    pieces = count_pieces(state)
+    value = pieces[0] - pieces[1]
+    if (is_terminal_state(state)):
+        return (value, row, column)
+
+    moves = []
+    for x in range(0,len(state),1):
+        for y in range(0, len(state),1):
+            # print "x: {} y: {}".format(x,y)
+            if (get_move_value(state,player,x,y) != 0):
+                moves.append((x,y))
+
+    if len(moves) == 0:
+        return (value, row, column)
 
     if player == 'B':
         # FIND MAX
+        '''
         max_pieces = 0
         for i in range(len(state)):
             for j in range(len(state[i])):
@@ -404,12 +416,24 @@ def minimax(state, player):
                     state = execute_move(state, player, i, j)
                     #main._print_game_state(state)
                     (b, w) = count_pieces(state)
-                    print "Max:", b, w
+                    #print "Max:", b, w
                     value = b - w
                     row = i
                     column = j
+        '''
+        value = -9001
+        for test in moves:
+            (x, y) = test
+            temp = minimax_ab(execute_move(state, player, x, y), 'W')
+            (v, r, c) = temp
+
+            if v > value:
+                value = v
+                row = x
+                column = y
     elif player == 'W':
         # FIND MIN
+        '''
         min_pieces = 0
         for i in range(len(state) - 1, -1, -1):
             for j in range(len(state[i]) - 1, -1, -1):
@@ -419,11 +443,21 @@ def minimax(state, player):
                     state = execute_move(state, player, i, j)
                     #main._print_game_state(state)
                     (b, w) = count_pieces(state)
-                    print "Min:", b, w
+                    #print "Min:", b, w
                     value = b - w
                     row = i
                     column = j
+        '''
+        value = 9001
+        for test in moves:
+            (x, y) = test
+            temp = minimax_ab(execute_move(state, player, x, y), 'B')
+            (v, r, c) = temp
 
+            if v < value:
+                value = v
+                row = x
+                column = y
     return (value, row, column)
 
 '''
@@ -436,19 +470,25 @@ def full_minimax(state, player):
     # Your implementation goes here
     row = 0
     column = 0
-    while is_terminal_state(state) is not True and (row != -1 and column != -1):
-        (value, row, column) = minimax(state, 'B')
-        print (value, row, column)
+    play = player
+    temp = state
+    while is_terminal_state(state) is not True:
+        (v, row, column) = minimax(state, play)
+        #print (v, row, column)
         # execute move w/ returned row and column
-        move_sequence.append(('B', row, column))
-        state = execute_move(state, 'B', row, column)
-        if is_terminal_state(state) or (row == -1 and column == -1):
-            break
-        (value, row, column) = minimax(state, 'W')
-        print (value, row, column)
-        # execute move w/ returned row and column
-        move_sequence.append(('W', row, column))
-        state = execute_move(state, 'W', row, column)
+        if row == -1 and column == -1:
+            if play == 'W':
+                play = 'B'
+            else:
+                play = 'W'
+            continue
+        state = execute_move(state, play, row, column)
+        value = v
+        move_sequence.append((play, row, column))
+        if play == 'B':
+            play = 'W'
+        else:
+            play = 'B'
     return (value, move_sequence)
 
 
@@ -470,7 +510,7 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
     moves = []
     for x in range(0,len(state),1):
             for y in range(0, len(state),1):
-                print "x: {} y: {}".format(x,y)
+                # print "x: {} y: {}".format(x,y)
                 if (get_move_value(state,player,x,y) != 0):
                     moves.append((x,y))
 
@@ -500,7 +540,7 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
         for test in moves:
             (x, y) = test
             temp = minimax_ab(execute_move(state,player,x,y), 'B',alpha, beta)
-            (v,r, c) = temp
+            (v, r, c) = temp
 
             if v < value:
                 value = v
