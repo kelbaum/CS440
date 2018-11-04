@@ -216,7 +216,6 @@ in particular, should not share memory with the old state.
 def execute_move(state, player, row, column):
     #Make new state with applicable number of rows
     #Iterate by row across state and transition
-
     new_state = []
 
     for x in range(0, len(state),1):
@@ -471,6 +470,7 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
     moves = []
     for x in range(0,len(state),1):
             for y in range(0, len(state),1):
+                print "x: {} y: {}".format(x,y)
                 if (get_move_value(state,player,x,y) != 0):
                     moves.append((x,y))
 
@@ -484,6 +484,7 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
             (x, y) = test
             temp =  minimax_ab(execute_move(state,player,x,y), 'W',alpha, beta)
             (v, r, c) = temp
+
             if v > value:
                 value = v
                 row = x
@@ -511,7 +512,6 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
                 beta = v
 
     return (value, row, column)
-
 
 '''
 This method should call the minimax_ab algorithm to compute an optimal move sequence
@@ -541,6 +541,5 @@ def full_minimax_ab(state, player):
             play = 'B'
         else:
             play = 'W'
-
 
     return (value, move_sequence)
