@@ -366,9 +366,12 @@ Check whether a state is a terminal state.
 '''
 def is_terminal_state(state, state_list = None):
     terminal = False
+    count = count_pieces(state)
+    if (count[0] == 0 or count[1] == 0):
+        return True
     # Your implementation goes here
-    for i in len(state):
-        for j in len(state[i]):
+    for i in range(0,len(state),1):
+        for j in range(0,len(state[i]),1):
             if state[i][j] == ' ':
                 if get_move_value(state, 'B', i, j) != 0:
                     return terminal
@@ -409,7 +412,8 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
     row = -1
     column = -1
     # Your implementation goes here 
-    value = count_pieces(state)
+    pieces = count_pieces(state)
+    value = pieces[0] - pieces[1]
     if (is_terminal_state(state)):
         return (value,row,column)
 
@@ -419,22 +423,42 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
                 if (get_move_value(state,player,x,y) != 0):
                     moves.append((x,y))
 
+    if len(moves) == 0:
+        return (value, row, column)
+
     #Max
     if player == 'B':
-        for ((row,col) in moves:
-            temp = max(count_pieces(state), minimax_ab(execute_move(state,player,row,col), 'W',alpha, beta))
+        value = -9001
+        for test in moves:
+            (x, y) = test
+            temp =  minimax_ab(execute_move(state,player,x,y), 'W',alpha, beta)
             (v, r, c) = temp
+            if v > value:
+                value = v
+                row = x
+                column = y
+            if v >= beta:
+                return (value,row,column)
             if v > alpha: 
                 alpha = v
 
-
     #Min
     if player == 'W':
-        for ((row,col) in moves:
-            temp = min(count_pieces(state), minimax_ab(execute_move(state,player,row,col), 'B',alpha, beta))
-            (v,r,c) = temp
+        value = 9001
+        for test in moves:
+            (x, y) = test
+            temp = minimax_ab(execute_move(state,player,x,y), 'B',alpha, beta)
+            (v,r, c) = temp
+            
+            if v < value:
+                value = v
+                row = x
+                column = y
+            if v <= alpha:
+                return (value,row,column)
             if v < beta:
                 beta = v
+
     return (value, row, column)
 
 
@@ -446,4 +470,26 @@ def full_minimax_ab(state, player):
     value = 0
     move_sequence = []
     # Your implementation goes here
+    play = player
+    temp = state
+
+    while(not is_terminal_state(temp)):
+        (v,r,c) = minimax_ab(temp,play)
+        if r == -1 and c == -1:
+            if play == 'W':
+                play = 'B'
+            else:
+                play = 'W'
+            continue
+        temp = execute_move(temp,play,r,c)
+
+        value = v
+        move_sequence.append((play, r, c))
+
+        if play == 'W':
+            play = 'B'
+        else:
+            play = 'W'
+
+
     return (value, move_sequence)
