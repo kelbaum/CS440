@@ -228,12 +228,10 @@ def execute_move(state, player, row, column):
 
     #Propagate changes caused by move
     #Up
-    x = row - 1
-    while x >= 0:
+    for x in range(row - 1, -1, -1):
         if new_state[x][column] == ' ':
             break
         if new_state[x][column] != player:
-            x =  x - 1
             continue
         if new_state[x][column] == player:
             for change in range(row-1, x, -1):
@@ -241,12 +239,10 @@ def execute_move(state, player, row, column):
             break
 
     #Down
-    x = row + 1
-    while x < len(state):
+    for x in range(row+1, len(state), 1):
         if new_state[x][column] == ' ':
             break
         if new_state[x][column] != player:
-            x =  x + 1
             continue
         if new_state[x][column] == player:
             for change in range(row+1, x, 1):
@@ -254,12 +250,10 @@ def execute_move(state, player, row, column):
             break
 
     #Left
-    y = column + 1
-    while y < len(state):
+    for y in range(column+1, len(state), 1):
         if new_state[row][y] == ' ':
             break
         if new_state[row][y] != player:
-            y =  y + 1
             continue
         if new_state[row][y] == player:
             for change in range(column+1, y, 1):
@@ -267,28 +261,21 @@ def execute_move(state, player, row, column):
             break
 
     #Right
-    y = column - 1
-    while y >= 0:
+    for y in range(column-1, -1, -1):
         if new_state[row][y] == ' ':
             break
         if new_state[row][y] != player:
-            y =  y - 1
             continue
         if new_state[row][y] == player:
             for change in range(column-1, y, -1):
                 new_state[row][change] = player
             break
 
-
     #Up Left
-    x = row - 1
-    y = column -1
-    while x >= 0 and y >=0:
+    for x,y in zip(range(row-1,-1,-1), range(column-1,-1,-1)):
         if new_state[x][y] == ' ':
             break
         if new_state[x][y] != player:
-            x = x - 1
-            y = y - 1
             continue
         if new_state[x][y] == player:
             for chX,chY in zip(range(row-1, x, -1), range(column-1, y,-1)):
@@ -296,14 +283,10 @@ def execute_move(state, player, row, column):
             break
 
     #Up Right
-    x = row - 1
-    y = column + 1
-    while x >= 0 and y < len(state):
+    for x,y in zip(range(row-1,-1,-1), range(column+1,len(state),1)):
         if new_state[x][y] == ' ':
             break
         if new_state[x][y] != player:
-            x = x - 1
-            y = y + 1
             continue
         if new_state[x][y] == player:
             for chX,chY in zip(range(row-1, x, -1), range(column+1, y, 1)):
@@ -311,14 +294,10 @@ def execute_move(state, player, row, column):
             break
 
     #Down Left
-    x = row + 1
-    y = column -1
-    while x < len(state) and y >=0:
+    for x,y in zip(range(row+1,len(state),1), range(column-1,-1,-1)):
         if new_state[x][y] == ' ':
             break
         if new_state[x][y] != player:
-            x = x + 1
-            y = y - 1
             continue
         if new_state[x][y] == player:
             for chX,chY in zip(range(row+1, x, 1), range(column-1, y,-1)):
@@ -326,14 +305,10 @@ def execute_move(state, player, row, column):
             break
 
     #Down Right
-    x = row + 1
-    y = column + 1
-    while x < len(state) and y < len(state):
+    for x,y in zip(range(row+1,len(state),1), range(column+1,len(state),1)):
         if new_state[x][y] == ' ':
             break
         if new_state[x][y] != player:
-            x = x + 1
-            y = y + 1
             continue
         if new_state[x][y] == player:
             for chX,chY in zip(range(row+1, x, 1), range(column+1, y, 1)):
@@ -540,5 +515,6 @@ def full_minimax_ab(state, player):
             play = 'B'
         else:
             play = 'W'
+    move_sequence.append((play,-1,-1))
 
     return (value, move_sequence)
