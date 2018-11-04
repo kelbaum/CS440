@@ -1,3 +1,4 @@
+import main
 '''
 Compute the value brought by a given move by placing a new token for player
 at (row, column). The value is the number of opponent pieces getting flipped
@@ -367,8 +368,8 @@ Check whether a state is a terminal state.
 def is_terminal_state(state, state_list = None):
     terminal = False
     # Your implementation goes here
-    for i in len(state):
-        for j in len(state[i]):
+    for i in range(len(state)):
+        for j in range(len(state[i])):
             if state[i][j] == ' ':
                 if get_move_value(state, 'B', i, j) != 0:
                     return terminal
@@ -386,6 +387,41 @@ def minimax(state, player):
     row = -1
     column = -1
     # Your implementation goes here
+    if is_terminal_state(state):
+        (b, w) = count_pieces(state)
+        return (b - w, row, column)
+
+    if player == 'B':
+        # FIND MAX
+        max_pieces = 0
+        for i in range(len(state)):
+            for j in range(len(state[i])):
+                temp = get_move_value(state, player, i, j)
+                if temp > max_pieces:
+                    max_pieces = temp
+                    state = execute_move(state, player, i, j)
+                    #main._print_game_state(state)
+                    (b, w) = count_pieces(state)
+                    print "Max:", b, w
+                    value = b - w
+                    row = i
+                    column = j
+    elif player == 'W':
+        # FIND MIN
+        min_pieces = 0
+        for i in range(len(state) - 1, -1, -1):
+            for j in range(len(state[i]) - 1, -1, -1):
+                temp = get_move_value(state, player, i, j)
+                if temp > min_pieces:
+                    min_pieces = temp
+                    state = execute_move(state, player, i, j)
+                    #main._print_game_state(state)
+                    (b, w) = count_pieces(state)
+                    print "Min:", b, w
+                    value = b - w
+                    row = i
+                    column = j
+
     return (value, row, column)
 
 '''
@@ -396,6 +432,21 @@ def full_minimax(state, player):
     value = 0
     move_sequence = []
     # Your implementation goes here
+    row = 0
+    column = 0
+    while is_terminal_state(state) is not True and (row != -1 and column != -1):
+        (value, row, column) = minimax(state, 'B')
+        print (value, row, column)
+        # execute move w/ returned row and column
+        move_sequence.append(('B', row, column))
+        state = execute_move(state, 'B', row, column)
+        if is_terminal_state(state) or (row == -1 and column == -1):
+            break
+        (value, row, column) = minimax(state, 'W')
+        print (value, row, column)
+        # execute move w/ returned row and column
+        move_sequence.append(('W', row, column))
+        state = execute_move(state, 'W', row, column)
     return (value, move_sequence)
 
 
