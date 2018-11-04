@@ -126,7 +126,7 @@ def get_move_value(state, player, row, column):
     else:
         i = row + 1
         j = column - 1
-        while column != -1 or row != len(state):
+        while column != -1 and row != len(state):
             if state[i][j] == other_player:
                 flip_temp += 1
                 i += 1
@@ -139,7 +139,7 @@ def get_move_value(state, player, row, column):
         flip_temp = 0
         i = row - 1
         j = column + 1
-        while row != -1 or column != len(state[row]):
+        while row != -1 and column != len(state[row]):
             if state[i][j] == other_player:
                 flip_temp += 1
                 i -= 1
@@ -194,7 +194,7 @@ def get_move_value(state, player, row, column):
         flip_temp = 0
         i = row + 1
         j = column + 1
-        while row != len(state) or column != len(state[row]):
+        while row != len(state) and column != len(state[row]):
             if state[i][j] == other_player:
                 flip_temp += 1
                 i += 1
@@ -461,7 +461,7 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
     value = 0
     row = -1
     column = -1
-    # Your implementation goes here 
+    # Your implementation goes here
     pieces = count_pieces(state)
     value = pieces[0] - pieces[1]
     if (is_terminal_state(state)):
@@ -491,7 +491,7 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
                 column = y
             if v >= beta:
                 return (value,row,column)
-            if v > alpha: 
+            if v > alpha:
                 alpha = v
 
     #Min
@@ -501,7 +501,7 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
             (x, y) = test
             temp = minimax_ab(execute_move(state,player,x,y), 'B',alpha, beta)
             (v,r, c) = temp
-            
+
             if v < value:
                 value = v
                 row = x
