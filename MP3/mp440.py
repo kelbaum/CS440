@@ -211,7 +211,34 @@ def minimax_ab(state, player, alpha = -10000000, beta = 10000000):
     row = -1
     column = -1
     # Your implementation goes here 
+    value = count_pieces(state)
+    if (is_terminal_state(state)):
+        return (value,row,column)
+
+    moves = []
+    for x in range(0,len(state),1):
+            for y in range(0, len(state),1):
+                if (get_move_value(state,player,x,y) != 0):
+                    moves.append((x,y))
+
+    #Max
+    if player == 'B':
+        for ((row,col) in moves:
+            temp = max(count_pieces(state), minimax_ab(execute_move(state,player,row,col), 'W',alpha, beta))
+            (v, r, c) = temp
+            if v > alpha: 
+                alpha = v
+
+
+    #Min
+    if player == 'W':
+        for ((row,col) in moves:
+            temp = min(count_pieces(state), minimax_ab(execute_move(state,player,row,col), 'B',alpha, beta))
+            (v,r,c) = temp
+            if v < beta:
+                beta = v
     return (value, row, column)
+
 
 '''
 This method should call the minimax_ab algorithm to compute an optimal move sequence
