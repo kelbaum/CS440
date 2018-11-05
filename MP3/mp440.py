@@ -401,7 +401,7 @@ def minimax(state, player):
         value = -9001
         for test in moves:
             (x, y) = test
-            temp = minimax_ab(execute_move(state, player, x, y), 'W')
+            temp = minimax(execute_move(state, player, x, y), 'W')
             (v, r, c) = temp
 
             if v > value:
@@ -428,7 +428,7 @@ def minimax(state, player):
         value = 9001
         for test in moves:
             (x, y) = test
-            temp = minimax_ab(execute_move(state, player, x, y), 'B')
+            temp = minimax(execute_move(state, player, x, y), 'B')
             (v, r, c) = temp
 
             if v < value:

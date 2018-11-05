@@ -53,8 +53,8 @@ if __name__ == "__main__":
 
     # Retrieve a initial game state for the special 4 x 4 game.
     # Note that this is NOT the default 4 x 4 game
-    game_state = _get_start_game_state_4_8()
-    #game_state = _get_start_game_state_4_figure_1()
+    #game_state = _get_start_game_state_4_8()
+    game_state = _get_start_game_state_4_figure_1()
 
     # Get a fully solved state for a given n
     print "Printing the initial game state for a 4 x 4 game:"
