@@ -168,7 +168,7 @@ def get_move_value(state, player, row, column):
     elif row == len(state) - 1 or column == len(state[row]) - 1:
         i = row - 1
         j = column - 1
-        while i != -1 or j != -1:
+        while i != -1 and j != -1:
             if state[i][j] == other_player:
                 flip_temp += 1
                 i -= 1
@@ -374,8 +374,10 @@ def minimax(state, player):
         for y in range(0, len(state),1):
             # print "x: {} y: {}".format(x,y)
             if (get_move_value(state,player,x,y) != 0):
+                #print player, get_move_value(state,player,x,y)
                 moves.append((x,y))
 
+    #print player, moves
     if len(moves) == 0:
         return (value, row, column)
 
