@@ -1,4 +1,3 @@
-import main
 '''
 Compute the value brought by a given move by placing a new token for player
 at (row, column). The value is the number of opponent pieces getting flipped
@@ -383,21 +382,6 @@ def minimax(state, player):
 
     if player == 'B':
         # FIND MAX
-        '''
-        max_pieces = 0
-        for i in range(len(state)):
-            for j in range(len(state[i])):
-                temp = get_move_value(state, player, i, j)
-                if temp > max_pieces:
-                    max_pieces = temp
-                    state = execute_move(state, player, i, j)
-                    #main._print_game_state(state)
-                    (b, w) = count_pieces(state)
-                    #print "Max:", b, w
-                    value = b - w
-                    row = i
-                    column = j
-        '''
         value = -9001
         for test in moves:
             (x, y) = test
@@ -410,21 +394,6 @@ def minimax(state, player):
                 column = y
     elif player == 'W':
         # FIND MIN
-        '''
-        min_pieces = 0
-        for i in range(len(state) - 1, -1, -1):
-            for j in range(len(state[i]) - 1, -1, -1):
-                temp = get_move_value(state, player, i, j)
-                if temp > min_pieces:
-                    min_pieces = temp
-                    state = execute_move(state, player, i, j)
-                    #main._print_game_state(state)
-                    (b, w) = count_pieces(state)
-                    #print "Min:", b, w
-                    value = b - w
-                    row = i
-                    column = j
-        '''
         value = 9001
         for test in moves:
             (x, y) = test
